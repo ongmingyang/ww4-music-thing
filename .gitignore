@@ -1,0 +1,15 @@
+# ignore config file
+/config
+
+# ignore todo file
+/TODO
+
+# ignore queue
+/queue
+
+# Platform-specific.
+*~
+*.rbc
+*.pyc
+*.sw*
+.DS_Store
