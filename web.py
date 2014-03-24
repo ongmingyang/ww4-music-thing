@@ -45,7 +45,7 @@ def login():
     if user.verify_password(request.form['password']):
       login_user(user)
       flash("Logged in successfully.")
-      return redirect(url_for("upload_file"))
+      return redirect(url_for("index"))
     else:
       flash("Login failed")
   return render_template("login.html")
@@ -57,9 +57,10 @@ def logout():
     flash("Successfully logged out!")
     return redirect(url_for("login"))
 
-@app.route('/room405', methods=['GET', 'POST'])
+@app.route('/room405/', methods=['GET', 'POST'])
+@app.route('/room405/<action>', methods=['GET', 'POST'])
 @login_required
-def upload_file():
+def index(action=None):
   currentPlaying = check_output(["cmus-remote", "-Q"]).decode('utf-8').split('\n')
   currentFile = qh.parseFilename(currentPlaying)
   if request.method == 'POST':
@@ -74,9 +75,11 @@ def upload_file():
         flash("Successfully pushed " + filename + " to queue!")
       except:
         flash('There was an error with the upload, please try again!')
-        return redirect(url_for('upload_file'))
+        return redirect(url_for('index'))
   elif request.method == 'GET':
-    filename = None
+    if action == 'togglepause':
+      check_output(["cmus-remote", "-u"])
+      return redirect(url_for("index"))
     currentQueue = qh.popFromQueue(currentFile)
   return render_template("template.html", currentPlaying = currentPlaying, currentQueue = currentQueue).encode('utf-8')
 
