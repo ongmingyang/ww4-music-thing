@@ -1,0 +1,29 @@
+<!doctype html>
+<title>Music Player in Ming Yang's room</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<form action="" method=post enctype=multipart/form-data>
+ <input type=file name=file><input type=submit value=Upload>
+</form>
+<a href="{{ url_for('logout') }}">Logout</a></br>
+
+{% for line in currentPlaying %}
+  {{ line }}<br>
+{% endfor %}
+
+<b>Currently playing:</b> {{ currentQueue[0] }} <br>
+<b>Queue:</b><br>
+{% for line in currentQueue %}
+  {{ line }}<br>
+{% endfor %}
+{% if currentQueue|length == 1 %}
+<i>Length of queue currently not known</i>
+{% endif %}

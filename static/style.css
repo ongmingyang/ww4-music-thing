@@ -1,0 +1,10 @@
+ul.flashes {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul.flashes li {
+  list-style-type: none;
+  background: #fed;
+  padding: 5px 15px;
+}
